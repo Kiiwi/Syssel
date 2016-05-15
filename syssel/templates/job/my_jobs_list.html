@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="list-group">
+    {% for job in job_list %}
+    <a href="{% url 'job:job_detail' job.headline %}" class="list-group-item">
+        <h4 class="list-group-item-heading">{{ job.headline }}</h4>
+        <h5 class="list-group-item-heading">{{ job.created_by }}</h5>
+        <div class="list-inline">
+            {% for tag in job.tags.all %}
+                <li>{{ tag.name }}</li>
+            {% endfor %}
+        </div>
+        <p class="list-group-item-text">{{ job.pub_date|date:"F j, Y" }}</p>
+    </a>
+    {% endfor %}
+
+</div>
+
+{% endblock %}

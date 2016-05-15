@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-sm-12">
+
+            <h2>{{ object.headline }}</h2>
+
+            <p>{{ object.content }}</p>
+        </div>
+    </div>
+
+    <!-- Action buttons -->
+    <div class="row">
+        <div class="col-sm-12 ">
+            {% if object.created_by == request.user %}
+            <a class="btn btn-primary" href="{% url 'job:job_update' job.headline %}">Edit</a>
+            <a class="btn btn-primary" href="{% url 'job:job_delete' job.headline %}">Delete</a>
+            <a class="btn btn-primary" href="{% url 'job:application_listing' job.headline %}">View Applications</a>
+            {% endif %}
+            {% if request.user.role == "student" %}
+            {% if request.user.is_complete %}
+            <a class="btn btn-primary" href="{% url 'job:apply' job.headline %}">Apply</a>
+            {% else %}
+            <p><strong>You need to complete your profile before you can apply</strong></p>
+            <a class="btn btn-warning" href="{% url 'users:detail' request.user.username %}">Apply</a>
+            {% endif %}
+            {% endif %}
+        </div>
+    </div>
+    <!-- End Action buttons -->
+
+
+</div>
+{% endblock content %}

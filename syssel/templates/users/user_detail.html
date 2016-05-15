@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}User: {{ object.username }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+
+            <h2>{{ object.username }}</h2>
+            {% if object.name %}
+            <p>{{ object.name }}</p>
+            {% endif %}
+        </div>
+    </div>
+    {% if object == request.user %}
+    <!-- Action buttons -->
+    <div class="row">
+        <div class="col-sm-12 ">
+            <a class="btn btn-primary" href="{% url 'users:update' %}">My Info</a>
+            <a class="btn btn-primary" href="{% url 'account_email' %}">E-Mail</a>
+            {% if object.is_corporate %}
+            {% if object.is_complete %}
+            <a class="btn btn-primary" href="{% url 'job:job_posting' %}">Create Job</a>
+            <a class="btn btn-primary" href="{% url 'users:my_jobs' request.user %}">My Jobs</a>
+            {% else %}
+            <p><strong>You need to complete your profile before you can begin posting jobs</strong></p>
+            <a class="btn btn-warning" href="">Create Job</a>
+            <a class="btn btn-warning" href="">My Jobs</a>
+            {% endif %}
+            {% endif %}
+            {% if object.is_student %}
+            {% if object.is_complete %}
+            <a class="btn btn-primary" href="{% url 'users:my_applications' request.user %}">My Applications</a>
+            {% else %}
+            <p><strong>You need to complete your profile before you can apply for jobs</strong></p>
+            <a class="btn btn-warning" href="">My Applications</a>
+            {% endif %}
+            {% endif %}
+        </div>
+
+
+    </div>
+    <!-- End Action buttons -->
+    {% endif %}
+
+
+</div>
+{% endblock content %}

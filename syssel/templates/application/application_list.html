@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="list-group">
+    <h2>Applications for {{ headline }}</h2>
+
+
+    {% for application in application_list %}
+    <a href="{% url 'users:detail' application.applicant.username %}" class="list-group-item">
+        <h4 class="list-group-item-heading">{{ application.applicant.username }}</h4>
+        <h5 class="list-group-item-heading">{{ application.applicant.skill }}</h5>
+        <p class="list-group-item-text">{{ application.application_date|date:"F j, Y" }}</p>
+    </a>
+        <a class="btn btn-success" href="{% url 'home' %}">Contact</a>
+        <a class="btn btn-danger" href="{% url 'job:application_delete' application.applicant %}">Decline</a>
+    </div>
+    {% empty %}
+        <h3>No applications yet</h3>
+    {% endfor %}
+
+</div>
+
+{% endblock %}

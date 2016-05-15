@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="list-group">
+    {% for application in application_list %}
+    <a href="{% url 'job:job_detail' application.job_name.headline %}" class="list-group-item">
+        <h4 class="list-group-item-heading">{{ application.job_name.headline }}</h4>
+        <h5 class="list-group-item-heading">{{ application.job_name.content }}</h5>
+        <p class="list-group-item-text">{{ application.application_date|date:"F j, Y" }}</p>
+    </a>
+    {% endfor %}
+
+</div>
+
+{% endblock %}
